@@ -29,6 +29,20 @@ function App() {
       alert('Upload Failed.');
     }
   };
+
+  return (
+    <div>
+      <h1>AI Resume Analyzer</h1>
+      <input type="file" accept='application/pdf' onChange={handleFileChange} />
+      <button onClick={handleUpload}>Upload Resume</button>
+      {text && (
+        <div>
+          <h2>Extracted Text:</h2>
+          <pre>{text}</pre>  
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default App
