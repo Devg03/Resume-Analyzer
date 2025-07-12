@@ -6,16 +6,7 @@ CORS(app, origins="http://localhost:5173", supports_credentials=True)
 
 @app.route('/api/parse-resume', methods = ['POST'])
 def parse_resume():
-    if request.method == 'OPTIONS':
-            # Preflight request
-            return '', 200
-
-    data = request.get_json()
-    name = data.get('name', 'Unknown')
-    return jsonify({
-        'message': f'Resume parsed for {name}',
-        'success': True
-    })
+    pass
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
