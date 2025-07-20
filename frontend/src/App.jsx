@@ -4,7 +4,7 @@ import './App.css';
 
 function App() {
   const [file, setFile] = useState(null);
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState("idle" | "uploading" | "success" | "error");
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -19,13 +19,14 @@ function App() {
     formData.append("resume", file);
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/parse-resume', formData, {
+      await axios.post('http://127.0.0.1:5000/api/parse-resume', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       setStatus("Success");
-
+      console.log(status);
+      
     } catch (error) {
       setStatus("Error");
       alert("File upload failed. Check console for error details.");
@@ -36,7 +37,7 @@ function App() {
     <div>
       <h1>AI Resume Analyzer</h1>
       <input type="file" accept='application/pdf' onChange={handleFileChange} />
-      {file && status != "Uploading" && <button>Upload Resume</button>}
+      {file && status != "Uploading" && <button onClick={handleUpload}>Upload Resume</button>}
     </div>
   );
 }
