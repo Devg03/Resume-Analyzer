@@ -3,22 +3,12 @@ from flask_cors import CORS
 import fitz
 
 app = Flask(__name__)
-CORS(app, origins="http://localhost:5173", supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
 
 @app.route('/api/parse-resume', methods = ['POST'])
 def parse_resume():
-    if 'resume' not in request.files:
-        return jsonify({"error", "No File Uploaded"}), 400
-    
-    file = request.files["resume"]
-    if file.filename == "":
-        return jsonify({"error", "Empty filename"}), 400
-    
-    # Potential error here
-    if not file.endswith('.pdf'):
-        return jsonify({"error", "Invalid file extension"}), 400
-
-    
+    text = "Succesfully Grabbed"
+    return jsonify(text)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
