@@ -18,7 +18,16 @@ def parse_resume():
     if not file.filename.endswith(".pdf"):
         return jsonify({"error": "File must be a PDF"}), 400
 
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp:
+            file.save(temp.name)
+            text = extract_text(temp.name)
+        print("Extracted text preview:\n", text[:])
+        return jsonify({'text': text})
     
+    except Exception as e:
+        print("Error during PDF extraction:", e)
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
